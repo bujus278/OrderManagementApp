@@ -15,6 +15,8 @@ import { validate } from "graphql";
 import { formatDatePicker } from "../../../util/DateFormater";
 import OmDatePicker from "../../../components/FormsUI/OmDatePicker";
 import OmCheckBox from "../../../components/FormsUI/OmCheckBox";
+import statuses from "../../../data/statuses.json";
+import { tr } from "date-fns/locale";
 
 interface OrderFormProps {
     order: Order
@@ -30,6 +32,9 @@ const FORM_VALIDATION = yup.object().shape({
     otherNotes: yup.string(),
     totalAmount: yup.number()
         .required("Total amount is required"),
+    isDelivery: yup.boolean(),
+    status: yup.string()
+        .required("Status is required")
 });
 
 export default function OrderForm({ order }: OrderFormProps) {
@@ -65,7 +70,7 @@ export default function OrderForm({ order }: OrderFormProps) {
                                 <OmSelect
                                     name="status"
                                     otherProps={{ label: "Order status" }}
-                                    options={Status} />
+                                    options={statuses} />
                             </Grid>
                             <Grid item xs={12}>
                                 <OmDatePicker name="orderDate" otherProps={{ label: "Order date" }} />
@@ -74,7 +79,13 @@ export default function OrderForm({ order }: OrderFormProps) {
                                 <OmTextField name="description" otherProps={{ label: "Description" }} />
                             </Grid>
                             <Grid item xs={12}>
-                                <OmTextField name="otherNotes" otherProps={{ label: "Other notes" }} />
+                                <OmTextField
+                                    name="otherNotes"
+                                    otherProps={{
+                                        label: "Other notes",
+                                        multiline: true,
+                                        rows:4
+                                    }} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>
