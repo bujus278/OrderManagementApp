@@ -12,25 +12,24 @@ import countries from "../../../data/countries.json";
 import { Status } from "../../../graphql/generated/schema";
 import { Label } from "@material-ui/icons";
 import { validate } from "graphql";
+import { formatDatePicker } from "../../../util/DateFormater";
+import OmDatePicker from "../../../components/FormsUI/OmDatePicker";
+import OmCheckBox from "../../../components/FormsUI/OmCheckBox";
 
 interface OrderFormProps {
     order: Order
 }
 
 const FORM_VALIDATION = yup.object().shape({
-    description: yup.string()
-        .required("First name is required"),
     orderDate: yup.date()
         .required("Order date is required"),
+    description: yup.string()
+        .required("Description is required"),
     depositAmount: yup.number()
         .required("Deposit amount is required"),
+    otherNotes: yup.string(),
     totalAmount: yup.number()
         .required("Total amount is required"),
-    status: yup.string()
-        .required("Status is required"),
-    otherNotes: yup.string(),
-    isDelivery: yup.boolean()
-        .required("Delivery status is required")
 });
 
 export default function OrderForm({ order }: OrderFormProps) {
@@ -39,13 +38,14 @@ export default function OrderForm({ order }: OrderFormProps) {
 
     const INITIAL_FORM_STATE = {
         id: order.id,
-        status: order.status || '',
+        customerId: order.customerId,
+        orderDate: formatDatePicker(order.orderDate ?? new Date()),
         description: order.description || '',
+        depositAmount: order.depositAmount || 0,
         otherNotes: order.otherNotes || '',
-        orderDate: order.orderDate || Date.now(),
-        depositAmount: order.depositAmount || '',
-        totalAmount: order.totalAmount || '',
+        totalAmount: order.totalAmount || 0,
         isDelivery: order.isDelivery || false,
+        status: order.status || Status.Draft,
     };
 
     function addOrUpdateOrderDetails(value: any) {
@@ -59,10 +59,27 @@ export default function OrderForm({ order }: OrderFormProps) {
                     initialValues={INITIAL_FORM_STATE}
                     validationSchema={FORM_VALIDATION}
                     onSubmit={addOrUpdateOrderDetails} >
-                    <Form placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    <Form>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
+                                <OmSelect
+                                    name="status"
+                                    otherProps={{ label: "Order status" }}
+                                    options={Status} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <OmDatePicker name="orderDate" otherProps={{ label: "Order date" }} />
+                            </Grid>
+                            <Grid item xs={12}>
                                 <OmTextField name="description" otherProps={{ label: "Description" }} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <OmTextField name="otherNotes" otherProps={{ label: "Other notes" }} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography>
+                                    Pricing information
+                                </Typography>
                             </Grid>
                             <Grid item xs={6}>
                                 <OmTextField name="totalAmount" otherProps={{ label: "Total amount" }} />
@@ -71,19 +88,12 @@ export default function OrderForm({ order }: OrderFormProps) {
                                 <OmTextField name="depositAmount" otherProps={{ label: "Deposit amount" }} />
                             </Grid>
                             <Grid item xs={6}>
-                                <OmSelect
-                                    name="status"
-                                    otherProps={{ label: "Status" }}
-                                    options={Status} />
+                                <OmCheckBox
+                                    name="isDelivery"
+                                    otherProps={{ label: "Delivery included" }}
+                                    label={"Include Delivery"}
+                                    legend={"Include delivery"} />
                             </Grid>
-                            <Grid item xs={6}>
-                                <OmTextField name="orderDate" otherProps={{ label: "Order date" }} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <OmTextField name="otherNotes" otherProps={{ label: "Other notes" }} />
-                            </Grid>
-
-
                             <Grid item xs={12}>
                                 <OmSubmitButton otherProps={{}} >
                                     {!order.id ? "Add New Order" : "Update order"}

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Order, useGetOrderByIdQuery } from "../../graphql/generated/schema";
+import { Customer, Order, useGetOrderByIdQuery } from "../../graphql/generated/schema";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import OrderForm from "./orderForms/OrderForm";
+import OmHeader from "../../components/elements/OmHeader";
 
 export default function OrderPage() {
     const params = useParams();
@@ -27,15 +28,14 @@ export default function OrderPage() {
     }
 
     const order = orderData.orders[0] as Order;
+    const customer = order.customer as Customer
 
     return (
         <Container>
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <Typography component='div' variant='h5' display='block' gutterBottom align='center'>
-                        Order Details
-                    </Typography>
+                    <OmHeader header={`Order for ${customer.firstName} ${customer.lastName}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>

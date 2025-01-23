@@ -16,7 +16,7 @@ export default function OrderList({ orders }: OrderListProps) {
             suppressSizeToFit: true,
             cellRenderer: function (params: any) {
                 return (
-                    <IconButton onClick={() => window.open(`/Orders/${params.value}`, '_black')}>
+                    <IconButton onClick={() => window.open(`/orders/${params.value}`, '_black')}>
                         <LaunchIcon fontSize="small" color="secondary" />
                     </IconButton>
                 );

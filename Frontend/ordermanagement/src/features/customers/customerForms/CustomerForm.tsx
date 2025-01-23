@@ -65,7 +65,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                     initialValues={INITIAL_FORM_STATE}
                     validationSchema={FORM_VALIDATION}
                     onSubmit={addOrUpdateCustomerDetails} >
-                    <Form placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    <Form >
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
                                 <OmTextField name="firstName" otherProps={{ label: "First Name" }} />
@@ -98,7 +98,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                                 <OmSelect
                                     name="country"
                                     otherProps={{ label: "Country" }}
-                                    options={ countries } />
+                                    options={countries} />
                             </Grid>
                             <Grid item xs={12}>
                                 <OmSubmitButton otherProps={{}} >
