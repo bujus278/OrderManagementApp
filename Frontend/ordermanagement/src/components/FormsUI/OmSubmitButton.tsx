@@ -23,7 +23,7 @@ export default function OmSubmitButton({ children, otherProps }: OmSubmitButtonP
     }
 
     return (
-        <Button {...otherProps}>
+        <Button {...configButton}>
             {children}
         </Button>
     );

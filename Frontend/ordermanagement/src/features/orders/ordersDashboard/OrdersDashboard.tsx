@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { Order, useGetOrdersQuery } from "../../graphql/generated/schema";
+import { Order, useGetOrdersQuery } from "../../../graphql/generated/schema";
 import OrderList from "./OrderList";
-import OmAlert from "../../components/elements/OmAlert";
-import OmLoading from "../../components/elements/OmLoading";
+import OmAlert from "../../../components/elements/OmAlert";
+import OmLoading from "../../../components/elements/OmLoading";
 
 export default function OrdersDashboard() {
     const { data: ordersData, loading, error } = useGetOrdersQuery();

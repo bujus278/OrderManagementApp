@@ -2,10 +2,12 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React from 'react';
 import './styles.css';
 import CustomersDashboard from '../../features/customers/customersDashboard/CustomersDashboard';
+import OrdersDashboard from '../../features/orders/ordersDashboard/OrdersDashboard';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 import HomePage from '../../features/home/HomePage';
-import OrdersDashboard from '../../features/orders/OrdersDashboard';
+import OrderPage from '../../features/orders/OrderPage';
+import CustomerPage from '../../features/customers/CustomerPage';
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
@@ -22,7 +24,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="Customers" element={<CustomersDashboard />} />
+            <Route path="Customers/:customerId" element={<CustomerPage />} />
             <Route path="Orders" element={<OrdersDashboard />} />
+            <Route path="Orders/:orderId" element={<OrderPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

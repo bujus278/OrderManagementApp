@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import { useField, useFormikContext } from 'formik';
-import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField } from '@mui/material';
 
 interface OmSelectProps {
     name: string,
@@ -39,6 +39,6 @@ export default function OmSelect({ name, options, otherProps }: OmSelectProps) {
                     </MenuItem>
                 )
             })}
-            </TextField>
+        </TextField>
     );
 }

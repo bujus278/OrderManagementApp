@@ -18,7 +18,7 @@ export default function OnGrid({ rowData, columnDefs }: OmGridProps) {
     }), []);
 
     return (
-        <div className='ag-theme-alpine' style={{ height: 500, width: '100%' }}>
+        <div className='ag-theme-alpine' style={{ height: 500,width: '100%' }}>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={columnDefs}

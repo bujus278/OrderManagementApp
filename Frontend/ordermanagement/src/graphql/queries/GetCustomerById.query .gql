@@ -7,7 +7,7 @@ query GetCustomerById($id: Int!) {
     email
     address {
       addressLine1
-      addressLine1
+      addressLine2
       city
       state
       country
