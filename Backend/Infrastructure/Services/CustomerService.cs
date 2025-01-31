@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
-using Core.Model;
+using Core.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace Infrastructure.Services
                 .Include(a => a.Address);
         }
 
-        public async Task<Customer> AddOrUpdateCustomer(CustomerModel customerModel)
+        public async Task<Customer> AddOrUpdateCustomerAsync(CustomerModel customerModel)
         {
             var context = _contextFactory.CreateDbContext();
             Customer customer;

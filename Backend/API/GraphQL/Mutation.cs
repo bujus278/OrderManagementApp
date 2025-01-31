@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
-using Core.Model;
+using Core.Models;
 
 namespace API.GraphQL
 {
@@ -8,7 +8,7 @@ namespace API.GraphQL
     {
         public async Task<Customer> AddOrUpdateCustomer([Service] ICustomerService customerService, CustomerModel customer)
         {
-            return await customerService.AddOrUpdateCustomer(customer);
+            return await customerService.AddOrUpdateCustomerAsync(customer);
         }
 
         public async Task<Order> AddOrUpdateOrder([Service] IOrderService orderService, OrderModel order)

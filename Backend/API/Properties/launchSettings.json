@@ -3,6 +3,7 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "launchUrl": "graphql",
     "iisExpress": {
       "applicationUrl": "http://localhost:33412",
       "sslPort": 44349

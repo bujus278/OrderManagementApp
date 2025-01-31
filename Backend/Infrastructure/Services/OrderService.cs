@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
-using Core.Model;
+using Core.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,14 +41,14 @@ namespace Infrastructure.Services
             {
                 order = new Order
                 {
+                    CustomerId = orderModel.CustomerId,
                     OrderDate = orderModel.OrderDate,
                     DepositAmount = orderModel.DepositAmount,
                     Description = orderModel.Description,
                     OtherNotes = orderModel.OtherNotes,
                     TotalAmount = orderModel.TotalAmount,
-                    Status = Core.Enums.Status.PENDING,
-                    IsDelivery = orderModel.IsDelivery,
-                    CustomerId = orderModel.CustomerId
+                    Status = orderModel.Status,
+                    IsDelivery = orderModel.IsDelivery                    
                 };
                 await context.Orders.AddAsync(order);
             }

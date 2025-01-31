@@ -1,5 +1,5 @@
 using Core.Entities;
-using Core.Model;
+using Core.Models;
 
 namespace Core.Interfaces
 {
@@ -7,6 +7,6 @@ namespace Core.Interfaces
     {
         IQueryable<Customer> GetCustomersAndOrders();
 
-        Task<Customer> AddOrUpdateCustomer(CustomerModel customerModel);
+        Task<Customer> AddOrUpdateCustomerAsync(CustomerModel customerModel);
     }
 }

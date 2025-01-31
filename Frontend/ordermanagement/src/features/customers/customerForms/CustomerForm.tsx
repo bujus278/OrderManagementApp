@@ -1,23 +1,22 @@
 import React, { useState } from "react";
-import { Customer } from "../../../graphql/generated/schema";
+import { Customer, CustomerModelInput, useAddOrUpdateCustomerMutation } from "../../../graphql/generated/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { Form, Formik } from "formik";
-import { Grid, Typography } from "@mui/material";
+import { Alert, Grid, Snackbar, Typography } from "@mui/material";
 import OmTextField from "../../../components/FormsUI/OMTextField";
 import OmSelect from "../../../components/FormsUI/OmSelect";
 import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
 import countries from "../../../data/countries.json";
-import { Label } from "@material-ui/icons";
-import { validate } from "graphql";
+import OmLoading from "../../../components/elements/OmLoading";
 
 interface CustomerFormProps {
     customer: Customer
 }
 
 const FORM_VALIDATION = yup.object().shape({
-    firstNmae: yup.string()
+    firstName: yup.string()
         .required("First name is required"),
     lastName: yup.string()
         .required("Last name is required"),
@@ -27,7 +26,7 @@ const FORM_VALIDATION = yup.object().shape({
         .email("Invalid email format")
         .required("Email is required"),
     addressLine1: yup.string()
-        .required("Addres line1 is required"),
+        .required("Address line1 is required"),
     addressLine2: yup.string(),
     city: yup.string()
         .required("City is required"),
@@ -51,15 +50,55 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         addressLine2: customer.address?.addressLine2 || '',
         city: customer.address?.city || '',
         state: customer.address?.state || '',
-        country: customer.address?.country || '',
+        country: customer.address?.country || ''
     };
 
-    function addOrUpdateCustomerDetails(value: any) {
-        console.log(value);
+    const [addOrUpdateCustomer, { loading: addOrUpdateCustomerLoading, error: addOrUpdateCustomerError }] = useAddOrUpdateCustomerMutation();
+    const handleClose = (event: any) => {
+        if (event.reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
     }
+
+    async function addOrUpdateCustomerDetails(values: CustomerModelInput) {
+        const response = await addOrUpdateCustomer({
+            variables: {
+                customer: values
+            }
+        });
+
+        setOpen(true);
+
+        const customer = response.data?.addOrUpdateCustomer as Customer;
+        if (customer.id) {
+            navigate(`/customers/${customer.id}`);
+        }
+    }
+
+    if (addOrUpdateCustomerLoading) {
+        return <OmLoading />;
+    }
+
+    if (addOrUpdateCustomerError) {
+        return (
+            <Snackbar open={true} autoHideDuration={6000} >
+                <Alert severity="error" >Error retreiving customer data</Alert>
+            </Snackbar>
+        );
+    }
+
+
 
     return (
         <Container>
+
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} >
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }} >
+                    {!customer.id ? "Customer added successfully" : "Customer updated successfully"}
+                </Alert>
+            </Snackbar>
+
             <div>
                 <Formik
                     initialValues={INITIAL_FORM_STATE}

@@ -1,6 +1,6 @@
 using Core.Enums;
 
-namespace Core.Model
+namespace Core.Models
 {
     public class OrderModel
     {
