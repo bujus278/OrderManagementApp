@@ -26,17 +26,18 @@ export default function NavBar() {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Button key="Customers" sx={{ my: 2, color: 'white', display: 'block' }}>
-                            <Link className='text-link' to="/Customers">Customers</Link>
+                            <Link className='text-link' to="/customers">Customers</Link>
                         </Button>
                         <Button key="Orders" sx={{ my: 2, color: 'white', display: 'block' }}>
-                            <Link className='text-link' to="/Orders">Orders</Link>
+                            <Link className='text-link' to="/orders">Orders</Link>
+                        </Button>
+                        <Button key="NewCustomer" sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <Link className='text-link' to="/customers/newcustomer">Add New Customer</Link>
                         </Button>
                     </Box>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
-                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
-    )
+    );
 }

@@ -30,9 +30,9 @@ namespace Infrastructure.Services
             var context = _contextFactory.CreateDbContext();
             Order order;
 
-            var customer = context.Customers
+            var customer = await context.Customers
                             .Where(c => c.Id == orderModel.CustomerId)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
             if (customer == null)
                 throw new Exception($"Customer with Id:{orderModel.CustomerId} was not found");
@@ -43,12 +43,12 @@ namespace Infrastructure.Services
                 {
                     CustomerId = orderModel.CustomerId,
                     OrderDate = orderModel.OrderDate,
-                    DepositAmount = orderModel.DepositAmount,
                     Description = orderModel.Description,
-                    OtherNotes = orderModel.OtherNotes,
                     TotalAmount = orderModel.TotalAmount,
+                    DepositAmount = orderModel.DepositAmount,
+                    IsDelivery = orderModel.IsDelivery,
                     Status = orderModel.Status,
-                    IsDelivery = orderModel.IsDelivery                    
+                    OtherNotes = orderModel.OtherNotes                                 
                 };
                 await context.Orders.AddAsync(order);
             }
@@ -62,13 +62,13 @@ namespace Infrastructure.Services
                     throw new Exception($"Order with id {orderModel.Id} was not found");
 
                 order.OrderDate = orderModel.OrderDate;
-                order.Status = orderModel.Status;
-                order.DepositAmount = orderModel.DepositAmount;
                 order.Description = orderModel.Description;
-                order.OtherNotes = orderModel.OtherNotes;
                 order.TotalAmount = orderModel.TotalAmount;
+                order.DepositAmount = orderModel.DepositAmount;
                 order.IsDelivery = orderModel.IsDelivery;
-
+                order.Status = orderModel.Status;
+                order.OtherNotes = orderModel.OtherNotes;
+                
                 context.Orders.Update(order);
             }
             await context.SaveChangesAsync();
