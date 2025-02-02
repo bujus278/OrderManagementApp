@@ -22,7 +22,7 @@ namespace Infrastructure.Services
 
             return context.Customers
                 .Where(c => !c.IsDeleted)
-                .Include(c => c.Orders)
+                .Include(c => c.Orders.Where(o => !o.IsDeleted))
                 .Include(a => a.Address);
         }
 
@@ -52,13 +52,13 @@ namespace Infrastructure.Services
             }
             else
             {
-                customer = context.Customers
+                customer = await context.Customers
                     .Where(c => c.Id == customerModel.Id)
                     .Include(a => a.Address)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 if (customer == null)
-                    throw new Exception("Customer not found");
+                    throw new Exception($"Customer not found");
 
                 customer.FirstName = customerModel.FirstName;
                 customer.LastName = customerModel.LastName;
@@ -74,6 +74,34 @@ namespace Infrastructure.Services
             }
             await context.SaveChangesAsync();
             return customer;
+        }
+
+        public async Task<bool> DeleteCustomerAsync(int customerId)
+        {
+            var context = _contextFactory.CreateDbContext();
+
+            var customer = await context.Customers
+                .Where(c => c.Id == customerId)
+                .FirstOrDefaultAsync();
+
+            if (customer == null)
+                throw new Exception("Customer not found");
+
+            customer.IsDeleted = true;
+
+            var orders = await context.Orders
+                .Where(o => o.CustomerId == customerId)
+                .ToListAsync();
+
+            foreach (var order in orders)
+            {
+                order.IsDeleted = true;
+            }
+
+            context.Customers.Update(customer);
+            context.Orders.UpdateRange(orders);
+
+            return await context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -1,13 +1,13 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React from 'react';
-import './styles.css';
 import CustomersDashboard from '../../features/customers/customersDashboard/CustomersDashboard';
-import OrdersDashboard from '../../features/orders/ordersDashboard/OrdersDashboard';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './styles.css';
 import Layout from './Layout';
 import HomePage from '../../features/home/HomePage';
-import OrderPage from '../../features/orders/OrderPage';
+import OrdersDashboard from '../../features/orders/ordersDashboard/OrdersDashboard';
 import CustomerPage from '../../features/customers/CustomerPage';
+import OrderPage from '../../features/orders/OrderPage';
 import NewCustomerPage from '../../features/customers/NewCustomerPage';
 import NewOrderPage from '../../features/orders/NewOrderPage';
 
@@ -16,7 +16,7 @@ const client = new ApolloClient({
     typePolicies: {}
   }),
   uri: process.env.REACT_APP_API_SCHEMA_URL
-})
+});
 
 function App() {
   return (

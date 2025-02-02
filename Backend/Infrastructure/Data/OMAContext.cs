@@ -10,6 +10,10 @@ namespace Infrastructure.Data
 {
     public class OMAContext : DbContext
     {
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+
         public OMAContext(DbContextOptions options) : base(options)
         {
 
@@ -92,9 +96,5 @@ namespace Infrastructure.Data
 
             //base.OnModelCreating(modelBuilder);
         }
-
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Address> Addresses { get; set; }
     }
 }

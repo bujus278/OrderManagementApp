@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Customer, Order } from "../../../graphql/generated/schema";
-import OmGrid from "../../../components/elements/OmGrid";
-import { IconButton } from "@mui/material";
+import { IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import OmGrid from '../../../components/elements/OmGrid';
+import { Customer, Order } from '../../../graphql/generated/schema';
 import LaunchIcon from '@mui/icons-material/Launch';
 
 interface OrderListProps {
@@ -16,7 +16,7 @@ export default function OrderList({ orders }: OrderListProps) {
             suppressSizeToFit: true,
             cellRenderer: function (params: any) {
                 return (
-                    <IconButton onClick={() => window.open(`/orders/${params.value}`, '_black')}>
+                    <IconButton onClick={() => window.open(`/orders/${params.value}`, "_black")}>
                         <LaunchIcon fontSize="small" color="secondary" />
                     </IconButton>
                 );
@@ -25,7 +25,7 @@ export default function OrderList({ orders }: OrderListProps) {
         {
             field: 'customer',
             cellRenderer: function (params: any) {
-                const customer = params.value as Customer
+                const customer = params.value as Customer;
                 return customer.firstName + ' ' + customer.lastName;
             }
         },

@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Customer, Order, useGetCustomerByIdQuery } from "../../graphql/generated/schema";
-import OmLoading from "../../components/elements/OmLoading";
-import OmAlert from "../../components/elements/OmAlert";
-import { Button, Container, Grid } from "@mui/material";
-import CustomerForm from "./customerForms/CustomerForm";
-import OmHeader from "../../components/elements/OmHeader";
-import OrderList from "../orders/ordersDashboard/OrderList";
+import { Delete } from '@mui/icons-material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from '@mui/material';
+import { Container } from '@mui/system';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import OmAlert from '../../components/elements/OmAlert';
+import OmHeader from '../../components/elements/OmHeader';
+import OmLoading from '../../components/elements/OmLoading';
+import { Customer, Order, useGetCustomerByIdQuery, useDeleteCustomerMutation } from '../../graphql/generated/schema';
+import OrderList from '../orders/ordersDashboard/OrderList';
+import CustomerForm from './customerForms/CustomerForm';
+
 
 export default function CustomerPage() {
     const params = useParams();
@@ -19,8 +22,29 @@ export default function CustomerPage() {
             id: customerId
         }
     });
+    const [deleteCustomer, { loading: deleteCustomerLoading, error: deleteCustomerError }] = useDeleteCustomerMutation();
 
-    if (customerLoading) {
+    async function deleteCustomerDetails() {
+        const response = await deleteCustomer({
+            variables: {
+                id: customerId
+            }
+        });
+
+        if (!response.errors) {
+            navigate('/customers');
+        }
+    }
+
+    function handleClickOpen() {
+        setOpen(true);
+    }
+
+    function handleClose() {
+        setOpen(false);
+    }
+
+    if (customerLoading || deleteCustomerLoading) {
         return <OmLoading />
     }
 
@@ -28,16 +52,47 @@ export default function CustomerPage() {
         return <OmAlert message="Error loading customer data" />
     }
 
+    if (deleteCustomerError) {
+        return <OmAlert message="Error deleting customer data" />
+    }
+
     const customer = customerData.customers[0] as Customer;
     const customerOrders = customer.orders as Order[];
     return (
         <Container>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='alert-dialog-title'
+                aria-describedby='alert-dialog-description'
+            >
+                <DialogTitle id='alert-dialog-title'>
+                    {"Delete Customer details?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id='alert-dialog-description'>
+                        You are about to remove this customer and all related orders. Confirm to continue or canel
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} >Cancel</Button>
+                    <Button onClick={deleteCustomerDetails} color='error'>Delete</Button>
+                </DialogActions>
+            </Dialog>
+
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
                     <OmHeader header={`Customer details`} />
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xs={2}>
+                    <Button variant='outlined' color='error' startIcon={<Delete />}
+                        onClick={handleClickOpen}
+                    >
+                        Delete
+                    </Button>
+                </Grid>
                 <Grid item xs={12}>
                     <CustomerForm customer={customer} />
                 </Grid>
