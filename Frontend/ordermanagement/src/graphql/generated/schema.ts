@@ -45,44 +45,6 @@ export type BooleanOperationFilterInput = {
   neq?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type Customer = {
-  __typename?: 'Customer';
-  address?: Maybe<Address>;
-  contactNumber?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  isDeleted: Scalars['Boolean'];
-  lastName?: Maybe<Scalars['String']>;
-  orders?: Maybe<Array<Maybe<Order>>>;
-};
-
-export type CustomerFilterInput = {
-  address?: InputMaybe<AddressFilterInput>;
-  and?: InputMaybe<Array<CustomerFilterInput>>;
-  contactNumber?: InputMaybe<StringOperationFilterInput>;
-  email?: InputMaybe<StringOperationFilterInput>;
-  firstName?: InputMaybe<StringOperationFilterInput>;
-  id?: InputMaybe<IntOperationFilterInput>;
-  isDeleted?: InputMaybe<BooleanOperationFilterInput>;
-  lastName?: InputMaybe<StringOperationFilterInput>;
-  or?: InputMaybe<Array<CustomerFilterInput>>;
-  orders?: InputMaybe<ListFilterInputTypeOfOrderFilterInput>;
-};
-
-export type CustomerModelInput = {
-  addressLine1?: InputMaybe<Scalars['String']>;
-  addressLine2?: InputMaybe<Scalars['String']>;
-  city?: InputMaybe<Scalars['String']>;
-  contactNumber?: InputMaybe<Scalars['String']>;
-  country?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  firstName?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['Int']>;
-  lastName?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Scalars['String']>;
-};
-
 export type DateTimeOperationFilterInput = {
   eq?: InputMaybe<Scalars['DateTime']>;
   gt?: InputMaybe<Scalars['DateTime']>;
@@ -127,6 +89,45 @@ export type IntOperationFilterInput = {
   nlt?: InputMaybe<Scalars['Int']>;
   nlte?: InputMaybe<Scalars['Int']>;
 };
+
+export type Customer = {
+  __typename?: 'Customer';
+  address?: Maybe<Address>;
+  contactNumber?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  isDeleted: Scalars['Boolean'];
+  lastName?: Maybe<Scalars['String']>;
+  orders?: Maybe<Array<Maybe<Order>>>;
+};
+
+export type CustomerFilterInput = {
+  address?: InputMaybe<AddressFilterInput>;
+  and?: InputMaybe<Array<CustomerFilterInput>>;
+  contactNumber?: InputMaybe<StringOperationFilterInput>;
+  email?: InputMaybe<StringOperationFilterInput>;
+  firstName?: InputMaybe<StringOperationFilterInput>;
+  id?: InputMaybe<IntOperationFilterInput>;
+  isDeleted?: InputMaybe<BooleanOperationFilterInput>;
+  lastName?: InputMaybe<StringOperationFilterInput>;
+  or?: InputMaybe<Array<CustomerFilterInput>>;
+  orders?: InputMaybe<ListFilterInputTypeOfOrderFilterInput>;
+};
+
+export type CustomerModelInput = {
+  addressLine1?: InputMaybe<Scalars['String']>;
+  addressLine2?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactNumber?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+};
+
 
 export type ListFilterInputTypeOfOrderFilterInput = {
   all?: InputMaybe<OrderFilterInput>;

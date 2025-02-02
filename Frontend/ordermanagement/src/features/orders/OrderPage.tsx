@@ -55,7 +55,7 @@ export default function OrderPage() {
     }
 
     const order = orderData.orders[0] as Order;
-    const customer = order.customer as Customer
+    const customer = order.customer as Customer;
 
     return (
         <Container>

@@ -1,5 +1,7 @@
-import { Alert, Box } from "@mui/material";
-import React from "react";
+import { Alert } from '@mui/material';
+import { Box } from '@mui/system';
+import React from 'react'
+
 
 interface OmAlertProps {
     message: string;

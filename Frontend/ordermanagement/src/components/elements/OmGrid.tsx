@@ -9,7 +9,7 @@ interface OmGridProps {
     columnDefs: any
 }
 
-export default function OnGrid({ rowData, columnDefs }: OmGridProps) {
+export default function OmGrid({ rowData, columnDefs }: OmGridProps) {
 
     const defaultColDef = useMemo(() => ({
         sortable: true,

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Order, OrderModelInput, Status, useAddOrUpdateOrderMutation } from "../../../graphql/generated/schema";
+import React, { useState } from 'react';
+import { Order, OrderModelInput, Status, useAddOrUpdateOrderMutation } from '../../../graphql/generated/schema';
 import * as yup from 'yup';
-import { useNavigate } from "react-router-dom";
-import { formatDatePicker } from "../../../util/DateFormater";
-import { Container } from "@mui/system";
-import { Form, Formik } from "formik";
+import { useNavigate } from 'react-router-dom';
+import { formatDatePicker } from '../../../util/DateFormater';
+import { Container } from '@mui/system';
+import { Form, Formik } from 'formik';
 import { Alert, Grid, Snackbar, Typography } from "@mui/material";
-import OmTextField from "../../../components/FormsUI/OMTextField";
-import OmSelect from "../../../components/FormsUI/OmSelect";
-import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
-import OmDatePicker from "../../../components/FormsUI/OmDatePicker";
-import OmCheckBox from "../../../components/FormsUI/OmCheckBox";
-import statuses from "../../../data/statuses.json";
-import OmLoading from "../../../components/elements/OmLoading";
+import OmTextField from '../../../components/FormsUI/OmTextField';
+import OmSelect from '../../../components/FormsUI/OmSelect';
+import OmSubmitButton from '../../../components/FormsUI/OmSubmitButton';
+import OmDatePicker from '../../../components/FormsUI/OmDatePicker';
+import OmCheckBox from '../../../components/FormsUI/OmCheckBox';
+import statuses from '../../../data/statuses.json';
+import OmLoading from '../../../components/elements/OmLoading';
 
 interface OrderFormProps {
     order: Order
