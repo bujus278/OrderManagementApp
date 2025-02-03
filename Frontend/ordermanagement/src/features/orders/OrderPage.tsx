@@ -20,7 +20,7 @@ export default function OrderPage() {
             id: orderId
         }
     });
-    const [deleteOrder, { loading: deleteOrderLoading, error: deleteOrderError }] = useDeleteOrderMutation();
+    const [deleteOrder, {loading: deleteOrderLoading, error: deleteOrderError}] = useDeleteOrderMutation();
 
     async function deleteOrderDetails() {
         const response = await deleteOrder({
@@ -29,7 +29,7 @@ export default function OrderPage() {
             }
         });
 
-        if (!response.errors) {
+        if(!response.errors) {
             navigate('/orders');
         }
     }
@@ -42,16 +42,18 @@ export default function OrderPage() {
         setOpen(false);
     }
 
-    if (orderLoading || deleteOrderLoading) {
-        return <OmLoading />
+    if(orderLoading || deleteOrderLoading) {
+        return <OmLoading/>
     }
 
-    if (orderError || !orderData || !orderData.orders) {
-        return <OmAlert message="Error loading order data" />
+    if(orderError || !orderData || !orderData.orders)
+    {
+        return <OmAlert message='Error retreiving order data' />
     }
 
-    if (deleteOrderError) {
-        return <OmAlert message="Error deleting order data" />
+    if(deleteOrderError)
+    {
+        return <OmAlert message='Error deleting order data' />
     }
 
     const order = orderData.orders[0] as Order;
@@ -67,23 +69,23 @@ export default function OrderPage() {
                 aria-describedby='alert-dialog-description'
             >
                 <DialogTitle id='alert-dialog-title'>
-                    {"Delete Order details?"}
+                    {"Delete Order Details?"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id='alert-dialog-description'>
-                        You are about to remove this order. Confirm to continue or canel
+                        You are about to remove this order. Confirm to continue or cancel
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} >Cancel</Button>
-                    <Button onClick={deleteOrderDetails} color='error'>Delete</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={deleteOrderDetails} color='error' autoFocus>Delete</Button>
                 </DialogActions>
             </Dialog>
 
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OmHeader header={`Order for - ${customer.firstName} ${customer.lastName}`} />
+                    <OmHeader header={`Order Details - ${customer.firstName} ${customer.lastName}`} />
                 </Grid>
                 <Grid item xs={2}>
                     <Button variant='outlined' color='error' startIcon={<Delete />}

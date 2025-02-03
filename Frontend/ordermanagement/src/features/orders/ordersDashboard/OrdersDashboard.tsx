@@ -17,7 +17,7 @@ export default function OrdersDashboard() {
         return <OmAlert message={'Could not load orders data'} />
     }
 
-    const orders = ordersData.orders as Order[]
+    const orders = ordersData.orders as Order[];
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
