@@ -10,5 +10,7 @@ namespace Core.Interfaces
         Task<Customer> AddOrUpdateCustomerAsync(CustomerModel customerModel);
 
         Task<bool> DeleteCustomerAsync(int customerId);
+
+        Task<Stats> GetCustomersAndOrdersStats();
     }
 }

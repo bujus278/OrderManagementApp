@@ -20,7 +20,7 @@ export default function OrderPage() {
             id: orderId
         }
     });
-    const [deleteOrder, {loading: deleteOrderLoading, error: deleteOrderError}] = useDeleteOrderMutation();
+    const [deleteOrder, { loading: deleteOrderLoading, error: deleteOrderError }] = useDeleteOrderMutation();
 
     async function deleteOrderDetails() {
         const response = await deleteOrder({
@@ -29,7 +29,7 @@ export default function OrderPage() {
             }
         });
 
-        if(!response.errors) {
+        if (!response.errors) {
             navigate('/orders');
         }
     }
@@ -42,17 +42,15 @@ export default function OrderPage() {
         setOpen(false);
     }
 
-    if(orderLoading || deleteOrderLoading) {
-        return <OmLoading/>
+    if (orderLoading || deleteOrderLoading) {
+        return <OmLoading />
     }
 
-    if(orderError || !orderData || !orderData.orders)
-    {
+    if (orderError || !orderData || !orderData.orders) {
         return <OmAlert message='Error retreiving order data' />
     }
 
-    if(deleteOrderError)
-    {
+    if (deleteOrderError) {
         return <OmAlert message='Error deleting order data' />
     }
 

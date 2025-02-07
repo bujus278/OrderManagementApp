@@ -1,6 +1,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Models;
+using Core.Enums;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -103,5 +104,29 @@ namespace Infrastructure.Services
 
             return await context.SaveChangesAsync() > 0;
         }
+
+        public async Task<Stats> GetCustomersAndOrdersStats()
+        {
+            OMAContext context = _contextFactory.CreateDbContext();
+
+            int totalCustomers = await context.Customers
+                .Where(c => !c.IsDeleted)
+                .CountAsync();
+
+            List<Order> orders = await context.Orders
+                .Where(o => !o.IsDeleted)
+                .ToListAsync();
+
+            return new Stats
+            {
+                TotalCustomers = totalCustomers,
+                TotalOrders = orders.Count(),
+                PendingOrders = orders.Count(o => o.Status == Status.PENDING),
+                DraftOrders = orders.Count(o => o.Status == Status.DRAFT),
+                CompletedOrders = orders.Count(o => o.Status == Status.COMPLETED),
+                ShippedOrders = orders.Count(o => o.Status == Status.SHIPPED)
+            };
+        }
+
     }
 }
